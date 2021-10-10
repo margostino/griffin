@@ -1,5 +1,10 @@
 # Griffin
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/margostino/griffin)](https://goreportcard.com/report/github.com/margostino/griffin)
+![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)
+[![GoDoc](https://godoc.org/github.com/margostino/griffin?status.svg)](https://godoc.org/github.com/margostino/griffin)
+![tests](https://github.com/margostino/griffin/workflows/tests/badge.svg)
+
 Shell generator built on top of [GO Prompt](https://github.com/c-bata/go-prompt) (a library for building powerful
 interactive prompts). Griffin allows to bind command and actions by configuration in order to reduce boilerplate code
 and let developers focus on the action handling.
