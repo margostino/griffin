@@ -1,13 +1,19 @@
-package main
+package action
 
 import (
 	"fmt"
 	"os"
 )
 
-//type Exit struct {
-//	Action
-//}
+var ActionMap = map[string]func(){
+	"ExecuteExit":        ExecuteExit,
+	"ExecuteShowMessage": ExecuteShowMessage,
+	"ExecuteHelp":        ExecuteHelp,
+}
+
+var ActionOneString = map[string]func([]string){
+	"ExecuteSelectInput": ExecuteSelectInput,
+}
 
 func ExecuteExit() {
 	fmt.Println("echo shell: command exit")

@@ -58,12 +58,12 @@ func (s *Shell) SetConfiguration(configuration *config.CommandsConfiguration) *S
 	return s
 }
 
-func (s *Shell) SetActionMap(actions map[string]func()) *Shell {
+func (s *Shell) SetActions(actions map[string]func()) *Shell {
 	s.ActionMap = actions
 	return s
 }
 
-func (s *Shell) SetActionOneStringMap(actions map[string]func([]string)) *Shell {
+func (s *Shell) SetActionsStrings(actions map[string]func([]string)) *Shell {
 	s.ActionOneStringMap = actions
 	return s
 }

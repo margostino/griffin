@@ -30,7 +30,7 @@ func TestSetConfiguration(t *testing.T) {
 		CommandList: []config.CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActionMap(ActionMap).
+		SetActions(ActionMap).
 		SetConfiguration(&commands)
 
 	if len(powershell.CommandMap.Commands) != 1 {
