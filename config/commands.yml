@@ -1,0 +1,15 @@
+commands:
+  - id: show message
+    description: "Show message"
+    action: ExecuteShowMessage
+  - id: help
+    description: "List commands available"
+    action: ExecuteHelp
+  - id: exit
+    description: "Exit Game"
+    action: ExecuteExit
+  - id: select input
+    args: 1
+    description: "Select input"
+    pattern: "^select input [a-z-A-Z]+$"
+    action: ExecuteSelectInput
