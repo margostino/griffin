@@ -6,14 +6,15 @@ import (
 )
 
 type Command struct {
-	Id   string
-	Args int
-	*action.Action
+	Id      string
+	Args    int
 	Pattern string
+	*action.Action
+	Description string
 }
 
 type CommandMap struct {
-	commands map[string]*Command
+	Commands map[string]*Command
 }
 
 func (m *CommandMap) Lookup(plan string) *Command {
@@ -21,10 +22,10 @@ func (m *CommandMap) Lookup(plan string) *Command {
 		return nil
 	}
 
-	command, _ := m.commands[plan]
+	command, _ := m.Commands[plan]
 
 	if command == nil {
-		for _, value := range m.commands {
+		for _, value := range m.Commands {
 			if value.Pattern != "" {
 				match, _ := regexp.MatchString(value.Pattern, plan)
 				if match {
