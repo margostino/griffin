@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/margostino/griffin/pkg/shell"
-)
+import "github.com/margostino/griffin/pkg/shell"
 
 func main() {
 	powershell := shell.NewShell("./config/commands.yml")
