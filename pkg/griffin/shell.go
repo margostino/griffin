@@ -7,6 +7,7 @@ import (
 	"github.com/margostino/griffin/pkg/command"
 	"github.com/margostino/griffin/pkg/config"
 	"github.com/margostino/griffin/pkg/context"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -50,11 +51,16 @@ func (s *Shell) LoadConfiguration(configFile string) *Shell {
 }
 
 func (s *Shell) SetConfiguration(configuration *config.CommandsConfiguration) *Shell {
-	commands := configuration.CommandList
-	commandMap := commandBind(commands, s)
-	suggestions := getMetadata(commandMap.Commands)
-	s.Suggestions = suggestions
-	s.CommandMap = commandMap
+
+	if configuration == nil {
+		log.Println("Configuration can not be nil")
+	} else {
+		commands := configuration.CommandList
+		commandMap := commandBind(commands, s)
+		suggestions := getMetadata(commandMap.Commands)
+		s.Suggestions = suggestions
+		s.CommandMap = commandMap
+	}
 	return s
 }
 

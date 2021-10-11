@@ -7,16 +7,23 @@ import (
 
 func TestLoadConfiguration(t *testing.T) {
 	powershell := New().LoadConfiguration("../../example/config/commands.yml")
-	if powershell.CommandMap.Commands == nil {
-		t.Fatalf(`it should load`)
-	}
+	assertShouldLoadCommands(powershell, t)
 }
 
 func TestFailedLoadConfiguration(t *testing.T) {
 	powershell := New().LoadConfiguration("invalid")
-	if len(powershell.CommandMap.Commands) > 0 {
-		t.Fatalf(`it should not load`)
-	}
+	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
+	assertShouldNotLoadSuggestions(powershell, t)
+	assertShouldNotLoadActions(powershell, t)
+	assertShouldNotLoadInputActions(powershell, t)
+}
+
+func TestFailedSetConfiguration(t *testing.T) {
+	powershell := New().SetConfiguration(nil)
+	assertShouldNotLoadCommands(powershell, t)
+	assertShouldNotLoadSuggestions(powershell, t)
+	assertShouldNotLoadActions(powershell, t)
+	assertShouldNotLoadInputActions(powershell, t)
 }
 
 func TestSetConfiguration(t *testing.T) {
@@ -33,27 +40,48 @@ func TestSetConfiguration(t *testing.T) {
 		SetActions(ActionMap).
 		SetConfiguration(&commands)
 
-	if len(powershell.CommandMap.Commands) != 1 {
-		t.Fatalf(`it should load one command`)
-	}
+	assertShouldLoadCommand(powershell, "run test", 0, "", "testing commands", t)
+	assertShouldLoadCommandAction(powershell, "run test", t)
+	assertShouldNotLoadCommandInputAction(powershell, "run test", t)
+}
 
-	if powershell.CommandMap.Commands["run test"] == nil {
-		t.Fatalf(`it should load dummy command`)
+func TestSetActions(t *testing.T) {
+	dummyCommand := config.CommandConfiguration{
+		Id:          "run test",
+		Description: "testing commands",
+		Args:        0,
+		Action:      "ExecuteDummyAction",
 	}
+	commands := config.CommandsConfiguration{
+		CommandList: []config.CommandConfiguration{dummyCommand},
+	}
+	powershell := New().
+		SetActions(ActionMap).
+		SetConfiguration(&commands)
 
-	if powershell.CommandMap.Commands["run test"].Args != 0 {
-		t.Fatalf(`it should load dummy command with args 0`)
-	}
-
-	if powershell.CommandMap.Commands["run test"].Pattern != "" {
-		t.Fatalf(`it should load dummy command with no pattern`)
-	}
-
-	if powershell.CommandMap.Commands["run test"].Description != "testing commands" {
-		t.Fatalf(`it should load dummy command with description`)
-	}
+	assertShouldLoadCommand(powershell, "run test", 0, "", "testing commands", t)
 
 	if powershell.CommandMap.Commands["run test"].Action.Function == nil {
 		t.Fatalf(`it should load dummy command with action`)
 	}
+}
+
+func TestSetInputActions(t *testing.T) {
+	dummyCommand := config.CommandConfiguration{
+		Id:          "run test",
+		Description: "testing commands",
+		Args:        1,
+		Action:      "ExecuteDummyInputAction",
+		Pattern:     "^run test [a-z-A-Z]+$",
+	}
+	commands := config.CommandsConfiguration{
+		CommandList: []config.CommandConfiguration{dummyCommand},
+	}
+	powershell := New().
+		SetActionsStrings(ActionOneString).
+		SetConfiguration(&commands)
+
+	assertShouldLoadCommand(powershell, "run test", 1, "^run test [a-z-A-Z]+$", "testing commands", t)
+	assertShouldLoadCommandInputAction(powershell, "run test", t)
+	assertShouldNotLoadCommandAction(powershell, "run test", t)
 }
