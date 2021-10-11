@@ -2,8 +2,11 @@ package action
 
 import (
 	"fmt"
+	"github.com/margostino/griffin/pkg/griffin"
 	"os"
 )
+
+var PowerEchoShell *griffin.Shell
 
 var ActionMap = map[string]func(){
 	"ExecuteExit":        ExecuteExit,
@@ -21,7 +24,7 @@ func ExecuteExit() {
 }
 
 func ExecuteHelp() {
-	fmt.Println("echo shell: command help")
+	PowerEchoShell.Help()
 }
 
 func ExecuteSelectInput(args []string) {

@@ -27,10 +27,12 @@ func (s *Shell) Start() {
 	for {
 		plan = s.Input()
 		command := s.CommandMap.Lookup(plan)
-		if command != nil {
-			context.Prepare(plan).With(command).Execute()
-		} else {
-			fmt.Printf("command plan %q is not valid\n", plan)
+		if plan != "" {
+			if command != nil {
+				context.Prepare(plan).With(command).Execute()
+			} else {
+				fmt.Printf("command plan %q is not valid\n", plan)
+			}
 		}
 	}
 }

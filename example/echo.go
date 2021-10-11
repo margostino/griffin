@@ -6,9 +6,10 @@ import (
 )
 
 func main() {
-	powershell := griffin.New().
+	echo := griffin.New().
 		SetActions(action.ActionMap).
 		SetActionsStrings(action.ActionOneString).
 		LoadConfiguration("./config/commands.yml")
-	powershell.Start()
+	action.PowerEchoShell = echo
+	echo.Start()
 }
