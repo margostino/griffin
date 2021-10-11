@@ -10,6 +10,6 @@ func main() {
 		SetActions(action.ActionMap).
 		SetActionsStrings(action.ActionOneString).
 		LoadConfiguration("./config/commands.yml")
-	action.PowerEchoShell = echo
+	action.EchoShell = echo
 	echo.Start()
 }

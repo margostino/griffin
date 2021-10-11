@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-var PowerEchoShell *griffin.Shell
+var EchoShell *griffin.Shell
 
 var ActionMap = map[string]func(){
 	"ExecuteExit":        ExecuteExit,
@@ -24,7 +24,7 @@ func ExecuteExit() {
 }
 
 func ExecuteHelp() {
-	PowerEchoShell.Help()
+	EchoShell.Help()
 }
 
 func ExecuteSelectInput(args []string) {
