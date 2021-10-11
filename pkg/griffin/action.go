@@ -1,5 +1,10 @@
 package griffin
 
+import (
+	"fmt"
+	"os"
+)
+
 type Action struct {
 	Function      func()
 	InputFunction func([]string)
@@ -19,4 +24,10 @@ func NewInputAction(function func([]string)) *Action {
 
 func (a Action) Execute() {
 	a.Function()
+}
+
+// ExecuteExit TODO: define default actions custom properly
+func ExecuteExit() {
+	fmt.Println("bye!")
+	os.Exit(0)
 }

@@ -9,18 +9,13 @@ import (
 var EchoShell *griffin.Shell
 
 var ActionMap = map[string]func(){
-	"ExecuteExit":        ExecuteExit,
+	"ExecuteExit":        griffin.ExecuteExit,
 	"ExecuteShowMessage": ExecuteShowMessage,
 	"ExecuteHelp":        ExecuteHelp,
 }
 
 var ActionOneString = map[string]func([]string){
 	"ExecuteSelectInput": ExecuteSelectInput,
-}
-
-func ExecuteExit() {
-	fmt.Println("echo shell: command exit")
-	os.Exit(0)
 }
 
 func ExecuteHelp() {

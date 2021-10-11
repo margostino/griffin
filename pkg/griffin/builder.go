@@ -7,7 +7,12 @@ import (
 )
 
 func New() *Shell {
-	return &Shell{Suggestions: make([]prompt.Suggest, 0), CommandMap: nil, ActionMap: nil, ActionOneStringMap: nil}
+	return &Shell{
+		Prompt: "griffin",
+		Suggestions: make([]prompt.Suggest, 0),
+		CommandMap: nil,
+		ActionMap: nil,
+		ActionOneStringMap: nil}
 }
 
 func getMetadata(commandMap map[string]*Command) []prompt.Suggest {

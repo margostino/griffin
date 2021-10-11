@@ -155,3 +155,8 @@ func TestSuggestion(t *testing.T) {
 
 	assertShouldLoadSuggestion(powershell, "run test", "testing commands", t)
 }
+
+func TestPromptName(t *testing.T) {
+	powershell := New().SetPrompt("testing")
+	assertPromptName(powershell, "testing", t)
+}

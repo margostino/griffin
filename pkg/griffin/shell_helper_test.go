@@ -45,7 +45,13 @@ func assertShouldLoadCommand(powershell *Shell, command string, args int, patter
 	}
 }
 
-func assertShouldLoadSuggestion(powershell *Shell, text string, description string, t *testing.T)  {
+func assertPromptName(powershell *Shell, name string, t *testing.T) {
+	if powershell.Prompt != name {
+		t.Fatalf(`it should be prompt name %s`, name)
+	}
+}
+
+func assertShouldLoadSuggestion(powershell *Shell, text string, description string, t *testing.T) {
 	suggestions := powershell.Suggestions
 	if len(suggestions) != 1 {
 		t.Fatalf(`it should load suggestion with size 1`)
@@ -57,6 +63,7 @@ func assertShouldLoadSuggestion(powershell *Shell, text string, description stri
 		t.Fatalf(`it should load suggestions with test %s`, text)
 	}
 }
+
 func assertShouldLoadCommandAction(powershell *Shell, command string, t *testing.T) {
 	if powershell.CommandMap.Commands[command].Action.Function == nil {
 		t.Fatalf(`it should load dummy command with action`)

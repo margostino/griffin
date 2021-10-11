@@ -8,6 +8,7 @@ import (
 )
 
 type Shell struct {
+	Prompt             string
 	Suggestions        []prompt.Suggest
 	CommandMap         *CommandMap
 	ActionMap          map[string]func()
@@ -32,6 +33,11 @@ func (s *Shell) Start() {
 			}
 		}
 	}
+}
+
+func (s *Shell) SetPrompt(name string) *Shell {
+	s.Prompt = name
+	return s
 }
 
 func (s *Shell) LoadConfiguration(configFile string) *Shell {
