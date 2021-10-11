@@ -7,6 +7,7 @@ import (
 
 func main() {
 	echo := griffin.New().
+		SetPrompt("echo").
 		SetActions(action.ActionMap).
 		SetActionsStrings(action.ActionOneString).
 		LoadConfiguration("./config/commands.yml")

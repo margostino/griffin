@@ -85,6 +85,6 @@ func (s *Shell) Help() {
 }
 
 func (s *Shell) prompt() string {
-	prefix := fmt.Sprintf("%s> ", "griffin")
+	prefix := fmt.Sprintf("%s> ", s.Prompt)
 	return prompt.Input(strings.ToLower(prefix), completer(s.Suggestions))
 }

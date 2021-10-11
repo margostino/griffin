@@ -3,7 +3,6 @@ package action
 import (
 	"fmt"
 	"github.com/margostino/griffin/pkg/griffin"
-	"os"
 )
 
 var EchoShell *griffin.Shell
