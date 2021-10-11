@@ -139,3 +139,20 @@ func TestActionIsNotFound(t *testing.T) {
 
 	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
 }
+
+func TestSuggestion(t *testing.T) {
+	dummyCommand := config.CommandConfiguration{
+		Id:          "run test",
+		Description: "testing commands",
+		Args:        0,
+		Action:      "ExecuteDummyAction",
+	}
+	commands := config.CommandsConfiguration{
+		CommandList: []config.CommandConfiguration{dummyCommand},
+	}
+	powershell := New().
+		SetActions(ActionMap).
+		SetConfiguration(&commands)
+
+	assertShouldLoadSuggestion(powershell, "run test", "testing commands", t)
+}
