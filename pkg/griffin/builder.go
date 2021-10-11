@@ -2,9 +2,6 @@ package griffin
 
 import (
 	"github.com/c-bata/go-prompt"
-	"github.com/margostino/griffin/pkg/action"
-	"github.com/margostino/griffin/pkg/command"
-	"github.com/margostino/griffin/pkg/config"
 	"log"
 	"strconv"
 )
@@ -13,7 +10,7 @@ func New() *Shell {
 	return &Shell{Suggestions: make([]prompt.Suggest, 0), CommandMap: nil, ActionMap: nil, ActionOneStringMap: nil}
 }
 
-func getMetadata(commandMap map[string]*command.Command) []prompt.Suggest {
+func getMetadata(commandMap map[string]*Command) []prompt.Suggest {
 	var suggestions = make([]prompt.Suggest, 0)
 	for key, value := range commandMap {
 		var commandText string
@@ -37,13 +34,13 @@ func completer(suggestions []prompt.Suggest) func(d prompt.Document) []prompt.Su
 	}
 }
 
-func commandBind(commandsList []config.CommandConfiguration, shell *Shell) *command.CommandMap {
-	commands := make(map[string]*command.Command)
+func commandBind(commandsList []CommandConfiguration, shell *Shell) *CommandMap {
+	commands := make(map[string]*Command)
 
 	for _, value := range commandsList {
 		action := getAction(&value, shell)
 		if action != nil && (isValidAction(&value, action.Function) || isValidInputAction(&value, action.InputFunction)) {
-			commands[value.Id] = &command.Command{
+			commands[value.Id] = &Command{
 				Id:          value.Id,
 				Args:        value.Args,
 				Action:      getAction(&value, shell),
@@ -59,26 +56,26 @@ func commandBind(commandsList []config.CommandConfiguration, shell *Shell) *comm
 	return newCommandMap(commands)
 }
 
-func getAction(command *config.CommandConfiguration, shell *Shell) *action.Action {
-	var commandAction *action.Action = nil
+func getAction(command *CommandConfiguration, shell *Shell) *Action {
+	var commandAction *Action = nil
 	if command.Args > 0 {
 		function := shell.ActionOneStringMap[command.Action]
-		commandAction = action.NewInputAction(function)
+		commandAction = NewInputAction(function)
 	} else {
 		function := shell.ActionMap[command.Action]
-		commandAction = action.NewAction(function)
+		commandAction = NewAction(function)
 	}
 	return commandAction
 }
 
-func newCommandMap(commands map[string]*command.Command) *command.CommandMap {
-	return &command.CommandMap{Commands: commands}
+func newCommandMap(commands map[string]*Command) *CommandMap {
+	return &CommandMap{Commands: commands}
 }
 
-func isValidInputAction(command *config.CommandConfiguration, function func([]string)) bool {
+func isValidInputAction(command *CommandConfiguration, function func([]string)) bool {
 	return command.Args > 0 && command.Pattern != "" && function != nil
 }
 
-func isValidAction(command *config.CommandConfiguration, function func()) bool {
+func isValidAction(command *CommandConfiguration, function func()) bool {
 	return command.Args == 0 && command.Pattern == "" && function != nil
 }

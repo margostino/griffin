@@ -1,13 +1,12 @@
-package context
+package griffin
 
 import (
-	"github.com/margostino/griffin/pkg/command"
 	"strings"
 )
 
 type ExecutionPlan struct {
 	Plan    string
-	Command *command.Command
+	Command *Command
 }
 
 func Prepare(plan string) *ExecutionPlan {
@@ -15,7 +14,7 @@ func Prepare(plan string) *ExecutionPlan {
 	return &ExecutionPlan{Plan: plan}
 }
 
-func (e *ExecutionPlan) With(command *command.Command) *ExecutionPlan {
+func (e *ExecutionPlan) With(command *Command) *ExecutionPlan {
 	e.Command = command
 	return e
 }

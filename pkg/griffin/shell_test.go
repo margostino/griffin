@@ -1,7 +1,6 @@
 package griffin
 
 import (
-	"github.com/margostino/griffin/pkg/config"
 	"testing"
 )
 
@@ -27,14 +26,14 @@ func TestFailedSetConfiguration(t *testing.T) {
 }
 
 func TestSetConfiguration(t *testing.T) {
-	dummyCommand := config.CommandConfiguration{
+	dummyCommand := CommandConfiguration{
 		Id:          "run test",
 		Description: "testing commands",
 		Args:        0,
 		Action:      "ExecuteDummyAction",
 	}
-	commands := config.CommandsConfiguration{
-		CommandList: []config.CommandConfiguration{dummyCommand},
+	commands := CommandsConfiguration{
+		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
 		SetActions(ActionMap).
@@ -46,14 +45,14 @@ func TestSetConfiguration(t *testing.T) {
 }
 
 func TestSetActions(t *testing.T) {
-	dummyCommand := config.CommandConfiguration{
+	dummyCommand := CommandConfiguration{
 		Id:          "run test",
 		Description: "testing commands",
 		Args:        0,
 		Action:      "ExecuteDummyAction",
 	}
-	commands := config.CommandsConfiguration{
-		CommandList: []config.CommandConfiguration{dummyCommand},
+	commands := CommandsConfiguration{
+		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
 		SetActions(ActionMap).
@@ -67,15 +66,15 @@ func TestSetActions(t *testing.T) {
 }
 
 func TestSetInputActions(t *testing.T) {
-	dummyCommand := config.CommandConfiguration{
+	dummyCommand := CommandConfiguration{
 		Id:          "run test",
 		Description: "testing commands",
 		Args:        1,
 		Action:      "ExecuteDummyInputAction",
 		Pattern:     "^run test [a-z-A-Z]+$",
 	}
-	commands := config.CommandsConfiguration{
-		CommandList: []config.CommandConfiguration{dummyCommand},
+	commands := CommandsConfiguration{
+		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
 		SetActionsStrings(ActionOneString).
@@ -87,15 +86,15 @@ func TestSetInputActions(t *testing.T) {
 }
 
 func TestEmptyPatternWithActionHasArgs(t *testing.T) {
-	dummyCommand := config.CommandConfiguration{
+	dummyCommand := CommandConfiguration{
 		Id:          "run test",
 		Description: "testing commands",
 		Args:        1,
 		Action:      "ExecuteDummyInputAction",
 		Pattern:     "",
 	}
-	commands := config.CommandsConfiguration{
-		CommandList: []config.CommandConfiguration{dummyCommand},
+	commands := CommandsConfiguration{
+		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
 		SetActionsStrings(ActionOneString).
@@ -105,15 +104,15 @@ func TestEmptyPatternWithActionHasArgs(t *testing.T) {
 }
 
 func TestNonEmptyPatternWithoutArgs(t *testing.T) {
-	dummyCommand := config.CommandConfiguration{
+	dummyCommand := CommandConfiguration{
 		Id:          "run test",
 		Description: "testing commands",
 		Args:        0,
 		Action:      "ExecuteDummyInputAction",
 		Pattern:     "^run test [a-z-A-Z]+$",
 	}
-	commands := config.CommandsConfiguration{
-		CommandList: []config.CommandConfiguration{dummyCommand},
+	commands := CommandsConfiguration{
+		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
 		SetActionsStrings(ActionOneString).
@@ -123,15 +122,15 @@ func TestNonEmptyPatternWithoutArgs(t *testing.T) {
 }
 
 func TestActionIsNotFound(t *testing.T) {
-	dummyCommand := config.CommandConfiguration{
+	dummyCommand := CommandConfiguration{
 		Id:          "run test",
 		Description: "testing commands",
 		Args:        1,
 		Action:      "InvalidFunction",
 		Pattern:     "some regex",
 	}
-	commands := config.CommandsConfiguration{
-		CommandList: []config.CommandConfiguration{dummyCommand},
+	commands := CommandsConfiguration{
+		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
 		SetActionsStrings(ActionOneString).
@@ -141,14 +140,14 @@ func TestActionIsNotFound(t *testing.T) {
 }
 
 func TestSuggestion(t *testing.T) {
-	dummyCommand := config.CommandConfiguration{
+	dummyCommand := CommandConfiguration{
 		Id:          "run test",
 		Description: "testing commands",
 		Args:        0,
 		Action:      "ExecuteDummyAction",
 	}
-	commands := config.CommandsConfiguration{
-		CommandList: []config.CommandConfiguration{dummyCommand},
+	commands := CommandsConfiguration{
+		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
 		SetActions(ActionMap).

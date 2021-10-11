@@ -3,16 +3,13 @@ package griffin
 import (
 	"fmt"
 	"github.com/c-bata/go-prompt"
-	"github.com/margostino/griffin/pkg/command"
-	"github.com/margostino/griffin/pkg/config"
-	"github.com/margostino/griffin/pkg/context"
 	"log"
 	"strings"
 )
 
 type Shell struct {
 	Suggestions        []prompt.Suggest
-	CommandMap         *command.CommandMap
+	CommandMap         *CommandMap
 	ActionMap          map[string]func()
 	ActionOneStringMap map[string]func([]string)
 }
@@ -29,7 +26,7 @@ func (s *Shell) Start() {
 		command := s.CommandMap.Lookup(plan)
 		if plan != "" {
 			if command != nil {
-				context.Prepare(plan).With(command).Execute()
+				Prepare(plan).With(command).Execute()
 			} else {
 				fmt.Printf("command plan %q is not valid\n", plan)
 			}
@@ -38,11 +35,11 @@ func (s *Shell) Start() {
 }
 
 func (s *Shell) LoadConfiguration(configFile string) *Shell {
-	configuration := config.LoadCommands(configFile)
+	configuration := LoadCommands(configFile)
 	return s.ConfigMap(configuration)
 }
 
-func (s *Shell) SetConfiguration(configuration *config.CommandsConfiguration) *Shell {
+func (s *Shell) SetConfiguration(configuration *CommandsConfiguration) *Shell {
 
 	if configuration == nil {
 		log.Println("Configuration can not be nil")
@@ -66,7 +63,7 @@ func (s *Shell) SetActionsStrings(actions map[string]func([]string)) *Shell {
 	return s
 }
 
-func (s *Shell) ConfigMap(configuration *config.CommandsConfiguration) *Shell {
+func (s *Shell) ConfigMap(configuration *CommandsConfiguration) *Shell {
 	commands := configuration.CommandList
 	commandMap := commandBind(commands, s)
 	suggestions := getMetadata(commandMap.Commands)

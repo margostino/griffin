@@ -1,4 +1,4 @@
-package config
+package griffin
 
 import (
 	"gopkg.in/yaml.v3"

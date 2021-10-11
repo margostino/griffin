@@ -1,4 +1,4 @@
-package action
+package griffin
 
 type Action struct {
 	Function      func()
