@@ -85,3 +85,57 @@ func TestSetInputActions(t *testing.T) {
 	assertShouldLoadCommandInputAction(powershell, "run test", t)
 	assertShouldNotLoadCommandAction(powershell, "run test", t)
 }
+
+func TestEmptyPatternWithActionHasArgs(t *testing.T) {
+	dummyCommand := config.CommandConfiguration{
+		Id:          "run test",
+		Description: "testing commands",
+		Args:        1,
+		Action:      "ExecuteDummyInputAction",
+		Pattern:     "",
+	}
+	commands := config.CommandsConfiguration{
+		CommandList: []config.CommandConfiguration{dummyCommand},
+	}
+	powershell := New().
+		SetActionsStrings(ActionOneString).
+		SetConfiguration(&commands)
+
+	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
+}
+
+func TestNonEmptyPatternWithoutArgs(t *testing.T) {
+	dummyCommand := config.CommandConfiguration{
+		Id:          "run test",
+		Description: "testing commands",
+		Args:        0,
+		Action:      "ExecuteDummyInputAction",
+		Pattern:     "^run test [a-z-A-Z]+$",
+	}
+	commands := config.CommandsConfiguration{
+		CommandList: []config.CommandConfiguration{dummyCommand},
+	}
+	powershell := New().
+		SetActionsStrings(ActionOneString).
+		SetConfiguration(&commands)
+
+	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
+}
+
+func TestActionIsNotFound(t *testing.T) {
+	dummyCommand := config.CommandConfiguration{
+		Id:          "run test",
+		Description: "testing commands",
+		Args:        1,
+		Action:      "InvalidFunction",
+		Pattern:     "some regex",
+	}
+	commands := config.CommandsConfiguration{
+		CommandList: []config.CommandConfiguration{dummyCommand},
+	}
+	powershell := New().
+		SetActionsStrings(ActionOneString).
+		SetConfiguration(&commands)
+
+	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
+}

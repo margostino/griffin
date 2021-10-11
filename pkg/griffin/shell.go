@@ -115,13 +115,19 @@ func commandBind(commandsList []config.CommandConfiguration, shell *Shell) *comm
 	commands := make(map[string]*command.Command)
 
 	for _, value := range commandsList {
-		commands[value.Id] = &command.Command{
-			Id:          value.Id,
-			Args:        value.Args,
-			Action:      getAction(&value, shell),
-			Pattern:     value.Pattern,
-			Description: value.Description,
+		action := getAction(&value, shell)
+		if action != nil && (isValidAction(&value, action.Function) || isValidInputAction(&value, action.InputFunction)) {
+			commands[value.Id] = &command.Command{
+				Id:          value.Id,
+				Args:        value.Args,
+				Action:      getAction(&value, shell),
+				Pattern:     value.Pattern,
+				Description: value.Description,
+			}
+		} else {
+			log.Printf("Command %s with Args %d, Pattern %s and action %s is not valid\n", value.Id, value.Args, value.Pattern, value.Action)
 		}
+
 	}
 
 	return newCommandMap(commands)
@@ -141,4 +147,12 @@ func getAction(command *config.CommandConfiguration, shell *Shell) *action.Actio
 
 func newCommandMap(commands map[string]*command.Command) *command.CommandMap {
 	return &command.CommandMap{Commands: commands}
+}
+
+func isValidInputAction(command *config.CommandConfiguration, function func([]string)) bool {
+	return command.Args > 0 && command.Pattern != "" && function != nil
+}
+
+func isValidAction(command *config.CommandConfiguration, function func()) bool {
+	return command.Args == 0 && command.Pattern == "" && function != nil
 }
