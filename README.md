@@ -7,7 +7,7 @@
 
 Shell generator built on top of [GO Prompt](https://github.com/c-bata/go-prompt) (a library for building powerful
 interactive prompts). Griffin allows to bind command and actions by configuration in order to reduce boilerplate code
-and let developers focus on the action handling.
+and let developer focus on the action handling.
 
 ```go
 package main
