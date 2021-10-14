@@ -33,6 +33,22 @@ func main() {
 }
 ```
 
+### Configuration
+
+Example: 
+
+```yaml
+commands:
+  - id: run job
+    description: "Run job daily"
+    action: ExecuteRunJob
+  - id: select input
+    args: 1
+    description: "Select input"
+    pattern: "^select input [a-z-A-Z]+$"
+    action: ExecuteSelectInput
+```
+
 ### Commands
 
 A shell can be created with Actions and Commands. A command might be: `run job`.
