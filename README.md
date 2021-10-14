@@ -21,13 +21,22 @@ var Actions = map[string]func(){
 	"ExecuteDoSomething": ExecuteDoSomething,
 }
 
+var InputActions = map[string]func(){
+	"ExecuteDoSomethingWithInput": ExecuteDoSomethingWithInput,
+}
+
 func ExecuteDoSomething() {
 	fmt.Println("do something")
+}
+
+func ExecuteSelectSomething(args []string) {
+	fmt.Println("select something %s", args[0])
 }
 
 func main() {
 	powershell := griffin.New().
 		SetActions(Actions).
+        SetActionsStrings(InputActions).
 		LoadConfiguration("commands.yml")
 	powershell.Start()
 }
@@ -35,18 +44,18 @@ func main() {
 
 ### Configuration
 
-Example: 
+Example:
 
 ```yaml
 commands:
-  - id: run job
-    description: "Run job daily"
-    action: ExecuteRunJob
+  - id: select something
+    description: "Select something amazing"
+    action: ExecuteDoSomething
   - id: select input
     args: 1
     description: "Select input"
-    pattern: "^select input [a-z-A-Z]+$"
-    action: ExecuteSelectInput
+    pattern: "^select something [a-z-A-Z]+$"
+    action: ExecuteSelectSomething
 ```
 
 ### Commands
@@ -65,11 +74,11 @@ of `CommandConfiguration`:
 
 ```go
 type CommandConfiguration struct {
-    Id          string `yaml:"id"`
-    Description string `yaml:"description"`
-    Args        int    `yaml:"args"`
-    Action      string `yaml:"action"`
-    Pattern     string `yaml:"pattern"`
+Id          string `yaml:"id"`
+Description string `yaml:"description"`
+Args        int    `yaml:"args"`
+Action      string `yaml:"action"`
+Pattern     string `yaml:"pattern"`
 }
 ```
 
