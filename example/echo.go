@@ -8,8 +8,8 @@ import (
 func main() {
 	echo := griffin.New().
 		SetPrompt("echo").
-		SetActions(action.ActionMap).
-		SetActionsStrings(action.ActionOneString).
+		SetSimpleActions(action.ActionMap).
+		SetMultiParamsActions(action.ActionOneString).
 		LoadConfiguration("./config/commands.yml")
 	action.EchoShell = echo
 	echo.Start()
