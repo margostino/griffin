@@ -36,7 +36,7 @@ func TestSetConfiguration(t *testing.T) {
 		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActions(ActionMap).
+		SetSimpleActions(ActionMap).
 		SetConfiguration(&commands)
 
 	assertShouldLoadCommand(powershell, "run test", 0, "", "testing commands", t)
@@ -55,7 +55,7 @@ func TestSetActions(t *testing.T) {
 		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActions(ActionMap).
+		SetSimpleActions(ActionMap).
 		SetConfiguration(&commands)
 
 	assertShouldLoadCommand(powershell, "run test", 0, "", "testing commands", t)
@@ -77,7 +77,7 @@ func TestSetInputActions(t *testing.T) {
 		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActionsStrings(ActionOneString).
+		SetMultiParamsActions(ActionOneString).
 		SetConfiguration(&commands)
 
 	assertShouldLoadCommand(powershell, "run test", 1, "^run test [a-z-A-Z]+$", "testing commands", t)
@@ -97,7 +97,7 @@ func TestEmptyPatternWithActionHasArgs(t *testing.T) {
 		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActionsStrings(ActionOneString).
+		SetMultiParamsActions(ActionOneString).
 		SetConfiguration(&commands)
 
 	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
@@ -115,7 +115,7 @@ func TestNonEmptyPatternWithoutArgs(t *testing.T) {
 		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActionsStrings(ActionOneString).
+		SetMultiParamsActions(ActionOneString).
 		SetConfiguration(&commands)
 
 	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
@@ -133,7 +133,7 @@ func TestActionIsNotFound(t *testing.T) {
 		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActionsStrings(ActionOneString).
+		SetMultiParamsActions(ActionOneString).
 		SetConfiguration(&commands)
 
 	assertShouldNotLoadCommandsWithInvalidConfig(powershell, t)
@@ -150,7 +150,7 @@ func TestSuggestion(t *testing.T) {
 		CommandList: []CommandConfiguration{dummyCommand},
 	}
 	powershell := New().
-		SetActions(ActionMap).
+		SetSimpleActions(ActionMap).
 		SetConfiguration(&commands)
 
 	assertShouldLoadSuggestion(powershell, "run test", "testing commands", t)

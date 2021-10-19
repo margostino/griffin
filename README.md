@@ -21,7 +21,7 @@ var Actions = map[string]func(){
 	"ExecuteDoSomething": ExecuteDoSomething,
 }
 
-var InputActions = map[string]func(){
+var InputActions = map[string]func([]string){
 	"ExecuteDoSomethingWithInput": ExecuteDoSomethingWithInput,
 }
 
@@ -36,7 +36,7 @@ func ExecuteSelectSomething(args []string) {
 func main() {
 	powershell := griffin.New().
 		SetActions(Actions).
-        SetActionsStrings(InputActions).
+		SetActionsStrings(InputActions).
 		LoadConfiguration("commands.yml")
 	powershell.Start()
 }

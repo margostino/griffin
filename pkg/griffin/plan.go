@@ -21,9 +21,9 @@ func (e *ExecutionPlan) With(command *Command) *ExecutionPlan {
 
 func (e *ExecutionPlan) Execute() {
 	if e.Command.Args > 0 {
-		fields := strings.Fields(e.Plan)
-		args := fields[len(fields)-e.Command.Args:]
-		e.Command.ExecuteWith(args)
+		args := strings.ReplaceAll(e.Plan, e.Command.Id, "")
+		params := strings.Fields(args)
+		e.Command.ExecuteWith(params)
 	} else {
 		e.Command.Execute()
 	}
