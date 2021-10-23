@@ -17,7 +17,7 @@ type Shell struct {
 
 func (s *Shell) Input() string {
 	commandLine := s.prompt()
-	return commandLine
+	return strings.TrimSpace(commandLine)
 }
 
 func (s *Shell) Start() {
